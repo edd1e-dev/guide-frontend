@@ -1,0 +1,27 @@
+.document {
+    width: 1000px;
+    left: 320px;
+    top: 150px;
+    position: absolute;
+}
+
+.document__inner {
+    border: 1px solid rgba(229, 229, 229, 0.5);
+    background-color: #fff;
+    transition: all 0.25s;
+    padding: 60px 82px 70px 82px;
+    margin-bottom: 30px;
+}
+
+.document__subject {
+    height: 100px;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+}
+
+.document__content {
+    margin-top: 50px;
+}

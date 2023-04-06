@@ -1,0 +1,17 @@
+.sidebar {
+    /* padding: 1rem; */
+    top: 116px;
+    padding-left: 30px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    position: fixed;
+    height: calc(100vh - 128px);
+    width: 256px;
+    border-right: 1px solid rgba(229, 229, 229, 0.5);
+    background-color: #fff;
+    transition: all 0.25s;
+}
+
+.sidebar__list {
+    margin-bottom: 10px;
+}
