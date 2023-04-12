@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, {useState} from 'react'
-import ErrorModal from '../Common/ErrorModal';
+import ErrorModal from '../Components/Common/ErrorModal';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-export default function Login({ route }) {
+export default function Login() {
 
   const navigate = useNavigate();
 
@@ -12,11 +12,11 @@ export default function Login({ route }) {
   const [password, setPassword] = useState("");
 
   const [showModal, setShowModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [cookies, setCookie] = useCookies(['jwt']);
+  const [, setCookie] = useCookies(['jwt']);
 
-  const doLogin = async (e) => {
+  const doLogin = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!accountId.length) {
@@ -50,11 +50,11 @@ export default function Login({ route }) {
     navigate('/main');
   }
 
-  const handleAccountId = (e) => {
+  const handleAccountId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccountId(e.target.value);
   }
 
-  const handlePassword = (e) => {
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   }
 

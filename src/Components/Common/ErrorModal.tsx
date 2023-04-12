@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function ErrorModal({ showModal, setShowModal, errorMessage }) {
+interface ErrorModalProps {
+  showModal: boolean,
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
+  errorMessage: string
+}
+
+export default function ErrorModal({ showModal, setShowModal, errorMessage }: ErrorModalProps) {
 
   return (
     <>

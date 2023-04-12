@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const PrivateRoute = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
+    const [cookies] = useCookies(['jwt']);
 
     const auth = cookies.jwt;
 

@@ -1,48 +1,47 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import Navbar from '../Common/Navbar'
-import SearchBanner from './SearchBanner'
+import React, { useEffect, useState } from 'react'
+import Navbar from '../Components/Common/Navbar'
+import SearchBanner from '../Components/Main/SearchBanner'
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import ServiceList from './ServiceList';
+import PlatformList from '../Components/Main/PlatformList';
 
 export default function Main() {
   const navigate = useNavigate();
 
   const [cookies] = useCookies(['jwt']);
-  const [services, setServices] = useState([]);
+  const [platforms, setPlatforms] = useState([]);
 
-  useMemo(() => {
-    const fetchData = async () => {
+  useEffect(() => {
+    (async () => {
       const jwt = cookies.jwt;
       const auth = jwt.grantType + " " + jwt.accessToken;
 
-      const request = await axios({
+      const result = await (await axios({
         method: 'get',
         url: 'http://localhost:8080/platforms',
         headers: {
           Authorization: auth
         }
-      });
+      })).data;
 
-      const result = request.data;
       if (result.errorCode === 1104) {
         navigate("/");
         return;
       }
 
-      setServices(result);
-    }
-    fetchData();
+      setPlatforms(result);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <>
       <Navbar />
       <SearchBanner />
-      <ServiceList 
-        services={services}
+      <PlatformList
+        platforms={platforms}
       />
-    </div>
+    </>
   )
 }

@@ -1,0 +1,19 @@
+* {
+    scroll-margin-top: 100px;
+}
+
+/* [class^="document-background"] { */
+.background {
+    min-height: calc(100vh - 64px);
+}
+
+.sidebar {
+    left: 95rem;
+    top: 10rem;
+}
+
+@media screen and (min-width: 768px) {
+    .content {
+        margin-left: 250px;
+    }
+}

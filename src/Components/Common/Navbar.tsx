@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 function Navbar() {
@@ -17,7 +16,7 @@ function Navbar() {
           <div className="flex justify-between w-full">
             {/* Logo */}
             <div className="flex items-center">
-              <a href="#" className="flex-shrink-0 text-white">
+              <a href="/main" className="flex-shrink-0 text-white">
                 Docs
               </a>
             </div>
@@ -28,19 +27,19 @@ function Navbar() {
                   {cookies.jwt.accountId}
                 </p>
                 <a
-                  href="#"
+                  href="/"
                   className="text-white hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Link 1
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="text-white hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Link 2
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="text-white hover:bg-blue-600 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Link 3
@@ -65,19 +64,19 @@ function Navbar() {
       <div className={`sm:hidden ${isOpen ? 'block' : 'hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           <a
-            href="#"
+            href="/"
             className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
           >
             Link 1
           </a>
           <a
-            href="#"
+            href="/"
             className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
           >
             Link 2
           </a>
           <a
-            href="#"
+            href="/"
             className="text-white hover:bg-blue-600 block px-3 py-2 rounded-md text-base font-medium"
           >
             Link 3
