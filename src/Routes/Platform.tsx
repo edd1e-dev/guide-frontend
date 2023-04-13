@@ -4,6 +4,7 @@ import Navbar from '../Components/Common/Navbar';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Sidebar from '../Components/Docs/Sidebar';
+import { url } from '../Config/config';
 
 export default function Platform() {
   const [cookies] = useCookies(['jwt']);
@@ -23,7 +24,7 @@ export default function Platform() {
 
       const result = await (await axios({
         method: 'get',
-        url: `http://localhost:8080/categories/${platform}`,
+        url: `${url}/categories/${platform}`,
         headers: {
           Authorization: auth
         }
