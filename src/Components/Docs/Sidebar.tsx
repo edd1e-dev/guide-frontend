@@ -4,6 +4,7 @@ import styles from "../../Styles/Sidebar.module.css"
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Document from './Document';
+import { url } from '../../Config/config';
 
 interface SidebarProps {
   targetDocument: object;
@@ -35,7 +36,7 @@ function Sidebar({ targetDocument, setTargetDocument, sidebarItems, showSidebar,
 
     const result = await (await axios({
       method: 'get',
-      url: `http://localhost:8080/document/${id}`,
+      url: `${url}/document/${id}`,
       headers: {
         Authorization: auth
       }

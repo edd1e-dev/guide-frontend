@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import ErrorModal from '../Components/Common/ErrorModal';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { url } from '../Config/config';
 
 export default function Login() {
 
@@ -33,7 +34,7 @@ export default function Login() {
 
     const request = await axios({
       method: 'post',
-      url: 'http://localhost:8080/user/auth',
+      url: `${url}/user/auth`,
       data: {
         accountId: accountId,
         password: password

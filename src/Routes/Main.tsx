@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import PlatformList from '../Components/Main/PlatformList';
+import { url } from '../Config/config';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Main() {
 
       const result = await (await axios({
         method: 'get',
-        url: 'http://localhost:8080/platforms',
+        url: `${url}/platforms`,
         headers: {
           Authorization: auth
         }
