@@ -5,6 +5,10 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Document from './Document';
 import { url } from '../../Config/config';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { fetchDocument } from '../../api';
 
 interface SidebarProps {
   targetDocument: object;
@@ -28,21 +32,31 @@ interface DocumentProps {
 
 function Sidebar({ targetDocument, setTargetDocument, sidebarItems, showSidebar, setShowSidebar, handleSidebar }: SidebarProps) {
 
+  const navigate = useNavigate();
   const [cookies] = useCookies(['jwt']);
-
-  const handleTitle = async (id: number) => {
+  const [documentId, setDocumentId] = useState(0);
+  
+  const { refetch } = useQuery(["document", documentId], () => {
     const jwt = cookies.jwt;
-    const auth = jwt.grantType + " " + jwt.accessToken;
-
-    const result = await (await axios({
-      method: 'get',
-      url: `${url}/document/${id}`,
-      headers: {
-        Authorization: auth
+    const auth = `${jwt.grantType} ${jwt.accessToken}`;
+    return fetchDocument(auth, documentId);
+  }, {
+    onSuccess: (data) => {
+      if (data.errorCode === 1104) {
+        navigate("/");
+        return;
       }
-    })).data;
+      setTargetDocument(data);
+    },
+    onError: () => {
+      console.log("오류가 발생하였습니다.");
+    },
+  }
+  );
 
-    setTargetDocument(result);
+  const handleTitle = (id: number) => {
+    setDocumentId(id);
+    refetch();
   }
 
   return (

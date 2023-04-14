@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, {useState} from 'react'
 import ErrorModal from '../Components/Common/ErrorModal';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { url } from '../Config/config';
+import { fetchLogin } from '../api';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Login() {
 
@@ -17,38 +17,44 @@ export default function Login() {
 
   const [, setCookie] = useCookies(['jwt']);
 
+  const { refetch } = useQuery(["login"], () => 
+    fetchLogin({ accountId: accountId, password: password }), {
+      enabled: false,
+      onSuccess: (data) => {
+        if (data.errorCode !== undefined) {
+          handleModal(data.errorMessage);
+          return;
+        }
+        
+        setCookie('jwt', data);
+        navigate('/main');
+      },
+      onError: () => {
+        console.log("오류가 발생하였습니다.");
+        handleModal("오류가 발생하였습니다.");
+      },
+    }
+  );
+
   const doLogin = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!accountId.length) {
-      setErrorMessage("아이디를 입력해주세요.");
-      setShowModal(true);
+      handleModal("아이디를 입력해주세요.");
       return;
     }
 
     if (!password.length) {
-      setErrorMessage("비밀번호를 입력해주세요.");
-      setShowModal(true);
+      handleModal("비밀번호를 입력해주세요.");
       return;
     }
 
-    const request = await axios({
-      method: 'post',
-      url: `${url}/user/auth`,
-      data: {
-        accountId: accountId,
-        password: password
-      }
-    });
+    refetch();
+  }
 
-    if (request.data.errorCode !== undefined) {
-      setErrorMessage(request.data.errorMessage);
-      setShowModal(true);
-      return;
-    }
-
-    setCookie('jwt', request.data);
-    navigate('/main');
+  const handleModal = (message: string) => {
+    setErrorMessage(message);
+    setShowModal(true);
   }
 
   const handleAccountId = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +82,7 @@ export default function Login() {
           </form>
         </div>
       </div>
+
       <ErrorModal
         showModal={showModal}
         setShowModal={setShowModal}
